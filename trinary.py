@@ -1,12 +1,41 @@
 from __future__ import annotations
 
+import sys
 import threading
+from abc import ABC
 from functools import wraps
-from typing import Callable, Final, Optional, Union, final
+from typing import Callable, Final, Optional, final, Union
+
+
+class Trinary(ABC):
+    pass
+
+
+Trinary.register(bool)
+
+
+def _only_bool(
+    method: Callable[[UnknownClass, bool], Trinary]
+) -> Callable[[UnknownClass, Trinary], Trinary]:
+    """
+    Handle non-bools before passing to the decorated method, a binary operator.
+    """
+
+    @wraps(method)
+    def inner(self: UnknownClass, other: Trinary) -> Trinary:
+        if isinstance(other, bool):
+            return method(self, other)
+        # Any binary operator with Unknown as both inputs
+        # except T or F returns Unknown
+        if other is self:
+            return self
+        return NotImplemented
+
+    return inner
 
 
 @final
-class UnknownClass:
+class UnknownClass(Trinary):
     """
     Trinary logic. Unknown represents both True and False and is a singleton.
     https://en.wikipedia.org/wiki/Three-valued_logic
@@ -55,26 +84,6 @@ class UnknownClass:
     def __repr__(self) -> str:
         return "Unknown"
 
-    @staticmethod
-    def _only_bool(
-        method: Callable[[UnknownClass, bool], Trinary]
-    ) -> Callable[[UnknownClass, Trinary], Trinary]:
-        """
-        Handle non-bools before passing to the decorated method, a binary operator.
-        """
-
-        @wraps(method)
-        def inner(self: UnknownClass, other: Trinary) -> Trinary:
-            if isinstance(other, bool):
-                return method(self, other)
-            # Any binary operator with Unknown as both inputs
-            # except T or F returns Unknown
-            if other is self:
-                return self
-            return NotImplemented
-
-        return inner
-
     @_only_bool
     def __and__(self, other: Trinary) -> Trinary:
         return other and self
@@ -104,8 +113,13 @@ class UnknownClass:
     def __ge__(self, other: Trinary) -> Trinary:
         return True if other is False else self
 
-    __lt__ = __and__
-    __le__ = __or__
+    @_only_bool
+    def __lt__(self, other: Trinary) -> Trinary:
+        return other and self
+
+    @_only_bool
+    def __le__(self, other: Trinary) -> Trinary:
+        return other or self
 
     def __hash__(self) -> int:
         return hash(UnknownClass)
@@ -114,8 +128,9 @@ class UnknownClass:
         raise TypeError("Unknown can't cast to a bool. Use strongly() or weakly().")
 
 
-Trinary = Union[bool, UnknownClass]
 Unknown: Final[UnknownClass] = UnknownClass()
+if sys.version_info > (3, 10):
+    Trinary = Union[bool, UnknownClass]
 
 
 def strictly(val) -> bool:
