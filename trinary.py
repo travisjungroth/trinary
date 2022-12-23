@@ -1,12 +1,20 @@
 from __future__ import annotations
 
 import threading
+from abc import ABC
 from functools import wraps
-from typing import Callable, Final, Optional, Union, final
+from typing import Callable, Final, Optional, final
+
+
+class Trinary(ABC):
+    pass
+
+
+Trinary.register(bool)
 
 
 def _only_bool(
-    method: Callable[[UnknownClass, bool], Trinary]
+        method: Callable[[UnknownClass, bool], Trinary]
 ) -> Callable[[UnknownClass, Trinary], Trinary]:
     """
     Handle non-bools before passing to the decorated method, a binary operator.
@@ -26,7 +34,7 @@ def _only_bool(
 
 
 @final
-class UnknownClass:
+class UnknownClass(Trinary):
     """
     Trinary logic. Unknown represents both True and False and is a singleton.
     https://en.wikipedia.org/wiki/Three-valued_logic
@@ -119,7 +127,6 @@ class UnknownClass:
         raise TypeError("Unknown can't cast to a bool. Use strongly() or weakly().")
 
 
-Trinary = Union[bool, UnknownClass]
 Unknown: Final[UnknownClass] = UnknownClass()
 
 
