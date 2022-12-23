@@ -1,3 +1,5 @@
+![License](https://img.shields.io/github/license/travisjungroth/trinary?color=blue)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 # trinary - A Python implementation of three-valued logic
 trinary is a Python library for working with three-valued logic. It allows you to represent and manipulate statements with three possible truth values: true, false, and unknown. Unknown represents the possibility of true and false.
 
@@ -94,7 +96,7 @@ definitely_free_saturday = strictly(~saturday_beach)
 print(definitely_free_saturday)  # False
 ```
 # Theory
-trinary implements Stephen Cole Kleene's ["strong logic of indeterminacy"](https://en.wikipedia.org/wiki/Three-valued_logic#Kleene_and_Priest_logics)", also called K3. This is equivalent to SQL logic with `NULL`.
+trinary implements Stephen Cole Kleene's ["strong logic of indeterminacy"](https://en.wikipedia.org/wiki/Three-valued_logic#Kleene_and_Priest_logics), also called K3. This is equivalent to SQL logic with `NULL`.
 
 ### Truth Table
 |p|q|p&q|p^q|p⇒q|¬p|
