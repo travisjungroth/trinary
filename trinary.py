@@ -5,6 +5,26 @@ from functools import wraps
 from typing import Callable, Final, Optional, Union, final
 
 
+def _only_bool(
+    method: Callable[[UnknownClass, bool], Trinary]
+) -> Callable[[UnknownClass, Trinary], Trinary]:
+    """
+    Handle non-bools before passing to the decorated method, a binary operator.
+    """
+
+    @wraps(method)
+    def inner(self: UnknownClass, other: Trinary) -> Trinary:
+        if isinstance(other, bool):
+            return method(self, other)
+        # Any binary operator with Unknown as both inputs
+        # except T or F returns Unknown
+        if other is self:
+            return self
+        return NotImplemented
+
+    return inner
+
+
 @final
 class UnknownClass:
     """
@@ -55,26 +75,6 @@ class UnknownClass:
     def __repr__(self) -> str:
         return "Unknown"
 
-    @staticmethod
-    def _only_bool(
-        method: Callable[[UnknownClass, bool], Trinary]
-    ) -> Callable[[UnknownClass, Trinary], Trinary]:
-        """
-        Handle non-bools before passing to the decorated method, a binary operator.
-        """
-
-        @wraps(method)
-        def inner(self: UnknownClass, other: Trinary) -> Trinary:
-            if isinstance(other, bool):
-                return method(self, other)
-            # Any binary operator with Unknown as both inputs
-            # except T or F returns Unknown
-            if other is self:
-                return self
-            return NotImplemented
-
-        return inner
-
     @_only_bool
     def __and__(self, other: Trinary) -> Trinary:
         return other and self
@@ -104,8 +104,13 @@ class UnknownClass:
     def __ge__(self, other: Trinary) -> Trinary:
         return True if other is False else self
 
-    __lt__ = __and__
-    __le__ = __or__
+    @_only_bool
+    def __lt__(self, other: Trinary) -> Trinary:
+        return other and self
+
+    @_only_bool
+    def __le__(self, other: Trinary) -> Trinary:
+        return other or self
 
     def __hash__(self) -> int:
         return hash(UnknownClass)
