@@ -6,11 +6,18 @@ trinary is a Python library for working with three-valued logic. It allows you t
 # Usage
 To use trinary, import `Unknown` into your Python project. You can then use `Unknown` alongside `True` and `False`.
 ```python
-from trinary import Unknown
+from trinary import Unknown, strictly, weakly
 
-x = Unknown
-y = True
-z = False
+test_a = Unknown
+test_b = True
+
+passed_both = test_a & test_b
+print(passed_both)            # Unknown
+print(strictly(passed_both))  # False
+passed_at_least_one = test_a | test_b
+print(passed_at_least_one)    # True
+maybe_failed_both = weakly(~test_a & ~test_b)
+print(maybe_failed_both)      # True
 ```
 
 trinary works with the standard comparisons and bitwise operators.
@@ -63,16 +70,16 @@ from trinary import Unknown, strictly, weakly
 correct = Unknown
 print(strictly(correct))  # False
 print(weakly(correct))    # True
-print(weakly(True))       # True
-print(weakly(False))      # True
+# anything else is the same as calling bool()
 print(weakly(''))         # False
-print(weakly(' '))        # True
 ```
+
+# Additional Examples
 
 Use trinary to represent the truth value of a statement with uncertain information.
 
 ```python
-from trinary import Trinary, Unknown, strictly, weakly
+from trinary import Trinary, Unknown, strictly
 
 
 def hot_out(weather: str) -> Trinary:
