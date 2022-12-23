@@ -1,9 +1,10 @@
 from __future__ import annotations
 
+import sys
 import threading
 from abc import ABC
 from functools import wraps
-from typing import Callable, Final, Optional, final
+from typing import Callable, Final, Optional, final, Union
 
 
 class Trinary(ABC):
@@ -128,6 +129,8 @@ class UnknownClass(Trinary):
 
 
 Unknown: Final[UnknownClass] = UnknownClass()
+if sys.version_info > (3, 10):
+    Trinary = Union[bool, UnknownClass]
 
 
 def strictly(val) -> bool:
