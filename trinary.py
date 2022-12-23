@@ -14,7 +14,7 @@ Trinary.register(bool)
 
 
 def _only_bool(
-        method: Callable[[UnknownClass, bool], Trinary]
+    method: Callable[[UnknownClass, bool], Trinary]
 ) -> Callable[[UnknownClass, Trinary], Trinary]:
     """
     Handle non-bools before passing to the decorated method, a binary operator.
