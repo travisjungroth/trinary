@@ -28,6 +28,6 @@ jobs:
         cache: 'poetry'
     - run: poetry env use '${{ steps.setup-python.outputs.python-path }}'
     - name: Install venv packages
-      run: poetry install --no-interaction --no-root
+      run: poetry install --no-interaction
     - name: Test
       run: poetry run pytest
