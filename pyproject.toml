@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "trinary"
-version = "0.1.0"
-description = ""
+version = "0.2.0"
+description = "Trinary logic in Python"
 authors = ["Travis Jungroth <jungroth@gmail.com>"]
 readme = "README.md"
 
