@@ -4,6 +4,11 @@
 # trinary - A Python implementation of three-valued logic
 trinary is a Python library for working with three-valued logic. It allows you to represent and manipulate statements with three possible truth values: true, false, and unknown. Unknown represents the possibility of true and false.
 
+# Installing
+```
+pip install trinary
+```
+
 # Usage
 To use trinary, import `Unknown` into your Python project. You can then use `Unknown` alongside `True` and `False`.
 ```python
