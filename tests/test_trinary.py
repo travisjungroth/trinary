@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from itertools import permutations
 from operator import and_, eq, ge, gt, le, lt, ne, or_, xor
 
 import pytest
@@ -34,6 +35,12 @@ def test_hash():
     d = {k: repr(k) for k in tri}
     for k in tri:
         assert d[k] == repr(k)
+
+
+@pytest.mark.parametrize('li', permutations([True, False, Unknown]))
+@pytest.mark.parametrize('x', [True, False, Unknown])
+def test_contained(li, x):
+    assert x in li
 
 
 def test_invert():
