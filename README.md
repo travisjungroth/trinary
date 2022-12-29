@@ -110,6 +110,7 @@ trinary implements Stephen Cole Kleene's ["strong logic of indeterminacy"](https
 ### Truth Table
 
 |p|q|p AND q|p OR q|p XOR q|p IMP q|NOT p|
+|-|-|-|-|-|-|-|
 |T|T|T|T|F|T|F|
 |T|F|F|T|T|F|F|
 |T|U|U|T|U|U|F|
