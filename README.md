@@ -108,14 +108,20 @@ print(definitely_free_saturday)  # False
 trinary implements Stephen Cole Kleene's ["strong logic of indeterminacy"](https://en.wikipedia.org/wiki/Three-valued_logic#Kleene_and_Priest_logics), also called K3. This is equivalent to SQL logic with `NULL`.
 
 ### Truth Table
-|p|q|p&q|p^q|p⇒q|¬p|
-|-|-|---|---|---|--|
-|T|T|T  |F  |T  |F |
-|F|F|F  |F  |T  |T |
-|F|U|F  |U  |U  |T |
-|U|T|U  |U  |T  |U |
-|U|F|F  |U  |U  |U |
-|U|U|U  |U  |U  |U |
+
+|p|q|p AND q|p OR q|p XOR q|p IMP q|NOT p|
+|T|T|T|T|F|T|F|
+|T|F|F|T|T|F|F|
+|T|U|U|T|U|U|F|
+|F|T|F|T|T|T|T|
+|F|F|F|F|F|T|T|
+|F|U|U|F|U|U|T|
+|U|T|U|T|U|U|U|
+|U|F|U|U|U|U|U|
+|U|U|U|U|U|U|U|
+
+
+
 
 # License
 trinary is licensed under the [MIT License](license.md).
