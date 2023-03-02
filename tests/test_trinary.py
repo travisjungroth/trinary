@@ -37,8 +37,8 @@ def test_hash():
         assert d[k] == repr(k)
 
 
-@pytest.mark.parametrize('num_list', permutations(range(3)))
-@pytest.mark.parametrize('num_value', [0, 1, 2])
+@pytest.mark.parametrize("num_list", permutations(range(3)))
+@pytest.mark.parametrize("num_value", [0, 1, 2])
 def test_contains(num_list, num_value):
     tri = [True, False, Unknown]
     tri_list = [tri[i] for i in num_list]
