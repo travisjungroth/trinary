@@ -4,7 +4,7 @@ import sys
 import threading
 from abc import ABC
 from functools import wraps
-from typing import Callable, Final, Optional, final, Union, Any
+from typing import Callable, Final, Optional, final, Union
 
 
 class Trinary(ABC):
