@@ -4,7 +4,7 @@ import sys
 import threading
 from abc import ABC
 from functools import wraps
-from typing import Callable, Final, Optional, final, Union
+from typing import Callable, Final, Optional, final, Union, Any
 
 
 class Trinary(ABC):
@@ -145,3 +145,12 @@ def weakly(val) -> bool:
     Unknown -> True
     """
     return val is Unknown or bool(val)
+
+
+def contains(container, item) -> bool:
+    """
+    Unknowns will break containment checks. Use this instead.
+    """
+    if item is Unknown:
+        return any(item is Unknown for item in container)
+    return item in container

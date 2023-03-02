@@ -1,10 +1,11 @@
 from __future__ import annotations
 
+from itertools import permutations
 from operator import and_, eq, ge, gt, le, lt, ne, or_, xor
 
 import pytest
 
-from trinary import Trinary, Unknown, UnknownClass, strictly, weakly
+from trinary import Trinary, Unknown, UnknownClass, strictly, weakly, contains
 
 ops = [eq, ne, and_, or_, xor, gt, ge, lt, le]
 set_to_trinary = {
@@ -34,6 +35,15 @@ def test_hash():
     d = {k: repr(k) for k in tri}
     for k in tri:
         assert d[k] == repr(k)
+
+
+@pytest.mark.parametrize('num_list', permutations(range(3)))
+@pytest.mark.parametrize('num_value', [0, 1, 2])
+def test_contains(num_list, num_value):
+    tri = [True, False, Unknown]
+    tri_list = [tri[i] for i in num_list]
+    tri_value = tri[num_value]
+    assert (num_value in num_list) == contains(tri_list, tri_value)
 
 
 def test_invert():
