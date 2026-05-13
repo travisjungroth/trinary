@@ -79,7 +79,7 @@ print(passed_both)            # Unknown
 print(strictly(passed_both))  # False
 passed_at_least_one = test_a | test_b
 print(passed_at_least_one)    # True
-maybe_failed_both = weakly(~test_a & ~test_b)
+maybe_failed_both = weakly(~test_a & (not test_b))
 print(maybe_failed_both)      # False
 
 
