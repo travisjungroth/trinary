@@ -27,7 +27,7 @@ print(Unknown | Unknown)   # Unknown
 # Logical XOR
 print(Unknown ^ True)      # Unknown
 print(Unknown ^ False)     # Unknown
-print(Unknown | Unknown)   # Unknown
+print(Unknown ^ Unknown)   # Unknown
 
 # Logical NOT
 print(~Unknown)            # Unknown
@@ -116,9 +116,9 @@ trinary implements Stephen Cole Kleene's ["strong logic of indeterminacy"](https
 |T|U|U|T|U|U|F|
 |F|T|F|T|T|T|T|
 |F|F|F|F|F|T|T|
-|F|U|U|F|U|U|T|
+|F|U|F|U|U|T|T|
 |U|T|U|T|U|U|U|
-|U|F|U|U|U|U|U|
+|U|F|F|U|U|U|U|
 |U|U|U|U|U|U|U|
 
 
