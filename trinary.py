@@ -129,7 +129,9 @@ class UnknownClass(Trinary):
 
 
 Unknown: Final[UnknownClass] = UnknownClass()
-if sys.version_info > (3, 10):
+# `isinstance(x, Union)` only supported in 3.10+.
+# In previous versions we rely on `isinstance(x, ABC)`.
+if sys.version_info >= (3, 10):
     Trinary = Union[bool, UnknownClass]
 
 
