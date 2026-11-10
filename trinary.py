@@ -4,7 +4,7 @@ import sys
 import threading
 from abc import ABC
 from functools import wraps
-from typing import Callable, Final, Optional, final, Union
+from typing import Callable, Final, Optional, final, Union, NoReturn
 
 
 class Trinary(ABC):
@@ -124,7 +124,7 @@ class UnknownClass(Trinary):
     def __hash__(self) -> int:
         return hash(UnknownClass)
 
-    def __bool__(self):
+    def __bool__(self) -> NoReturn:
         raise TypeError("Unknown can't cast to a bool. Use strongly() or weakly().")
 
 
